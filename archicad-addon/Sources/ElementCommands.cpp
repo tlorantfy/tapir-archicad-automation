@@ -262,6 +262,25 @@ GS::Optional<GS::UniString> GetDetailsOfElementsCommand::GetResponseSchema () co
                                     ]
                                 },
                                 {
+                                    "title": "WindowDoorDetails",
+                                    "properties": {
+                                        "ownerElementId": {
+                                            "$ref": "#/ElementId"
+                                        },
+                                        "width": {
+                                            "type": "number"
+                                        },
+                                        "height": {
+                                            "type": "number"
+                                        }
+                                    },
+                                    "required": [
+                                        "ownerElementId",
+                                        "width",
+                                        "height"
+                                    ]
+                                },
+                                {
                                     "title": "NotYetSupportedElementTypeDetails",
                                     "properties": {
                                         "error": {
@@ -363,6 +382,19 @@ GS::ObjectState GetDetailsOfElementsCommand::Execute (const GS::ObjectState& par
                 typeSpecificDetails.Add ("origin", Create2DCoordinateObjectState (elem.column.origoPos));
                 typeSpecificDetails.Add ("height", elem.column.height);
                 typeSpecificDetails.Add ("bottomOffset", elem.column.bottomOffset);
+                break;
+
+            case API_WindowID:
+            case API_DoorID:
+                typeSpecificDetails.Add ("ownerElementId", CreateGuidObjectState (elem.window.owner));
+                typeSpecificDetails.Add ("width",  elem.window.openingBase.width);
+                typeSpecificDetails.Add ("height", elem.window.openingBase.height);
+                break;
+
+            case API_SkylightID:
+                typeSpecificDetails.Add ("ownerElementId", CreateGuidObjectState (elem.skylight.owner));
+                typeSpecificDetails.Add ("width",  elem.skylight.openingBase.width);
+                typeSpecificDetails.Add ("height", elem.skylight.openingBase.height);
                 break;
 
             default:
