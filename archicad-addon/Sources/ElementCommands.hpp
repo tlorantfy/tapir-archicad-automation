@@ -78,26 +78,6 @@ public:
     virtual GS::ObjectState Execute (const GS::ObjectState& parameters, GS::ProcessControl& processControl) const override;
 };
 
-class GetGDLParametersOfElementsCommand : public CommandBase
-{
-public:
-    GetGDLParametersOfElementsCommand ();
-    virtual GS::String GetName () const override;
-    virtual GS::Optional<GS::UniString> GetInputParametersSchema () const override;
-    virtual GS::Optional<GS::UniString> GetResponseSchema () const override;
-    virtual GS::ObjectState Execute (const GS::ObjectState& parameters, GS::ProcessControl& processControl) const override;
-};
-
-class SetGDLParametersOfElementsCommand : public CommandBase
-{
-public:
-    SetGDLParametersOfElementsCommand ();
-    virtual GS::String GetName () const override;
-    virtual GS::Optional<GS::UniString> GetInputParametersSchema () const override;
-    virtual GS::Optional<GS::UniString> GetResponseSchema () const override;
-    virtual GS::ObjectState Execute (const GS::ObjectState& parameters, GS::ProcessControl& processControl) const override;
-};
-
 class FilterElementsCommand : public CommandBase
 {
 public:
@@ -112,6 +92,16 @@ class HighlightElementsCommand : public CommandBase
 {
 public:
     HighlightElementsCommand ();
+    virtual GS::String GetName () const override;
+    virtual GS::Optional<GS::UniString> GetInputParametersSchema () const override;
+    virtual GS::Optional<GS::UniString> GetResponseSchema () const override;
+    virtual GS::ObjectState Execute (const GS::ObjectState& parameters, GS::ProcessControl& processControl) const override;
+};
+
+class Get3DBoundingBoxesCommand : public CommandBase
+{
+public:
+    Get3DBoundingBoxesCommand ();
     virtual GS::String GetName () const override;
     virtual GS::Optional<GS::UniString> GetInputParametersSchema () const override;
     virtual GS::Optional<GS::UniString> GetResponseSchema () const override;

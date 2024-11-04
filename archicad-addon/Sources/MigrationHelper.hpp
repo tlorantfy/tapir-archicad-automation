@@ -38,6 +38,8 @@
 
 #define ACAPI_Command_GetHttpConnectionPort(par1) ACAPI_Goodies (APIAny_GetHttpConnectionPortID, par1)
 
+#define ACAPI_Element_CalcBounds(par1,par2) ACAPI_Database (APIDb_CalcBoundsID, par1, par2)
+
 inline API_AttributeIndex ACAPI_CreateAttributeIndex (Int32 index)
 {
     return index;
@@ -243,6 +245,37 @@ inline API_ElemTypeID GetElemTypeId (const API_Elem_Head& elemHead)
     return elemHead.type.typeID;
 #else
     return elemHead.typeID;
+#endif
+}
+
+inline GSErrCode TAPIR_Element_AddClassificationItemDefault (const API_Elem_Head& elemHead, const API_Guid& itemGuid)
+{
+#ifdef ServerMainVers_2600
+    return ACAPI_Element_AddClassificationItemDefault (elemHead.type, itemGuid);
+#else
+    return ACAPI_Element_AddClassificationItemDefault (elemHead.typeID, elemHead.variationID, itemGuid);
+#endif
+}
+
+inline GSErrCode TAPIR_Element_SetCategoryValueDefault (const API_Elem_Head& elemHead, const API_ElemCategoryValue& categoryValue)
+{
+#ifdef ServerMainVers_2700
+    return ACAPI_Category_SetCategoryValueDefault (elemHead.type, categoryValue.category, categoryValue);
+#else
+#if defined ServerMainVers_2600
+    return ACAPI_Element_SetCategoryValueDefault (elemHead.type, categoryValue.category, categoryValue);
+#else
+    return ACAPI_Element_SetCategoryValueDefault (elemHead.typeID, elemHead.variationID, categoryValue.category, categoryValue);
+#endif
+#endif
+}
+
+inline GSErrCode TAPIR_Element_SetPropertiesOfDefaultElem (const API_Elem_Head& elemHead, const GS::Array<API_Property>& properties)
+{
+#ifdef ServerMainVers_2600
+    return ACAPI_Element_SetPropertiesOfDefaultElem (elemHead.type, properties);
+#else
+    return ACAPI_Element_SetPropertiesOfDefaultElem (elemHead.typeID, elemHead.variationID, properties);
 #endif
 }
 
